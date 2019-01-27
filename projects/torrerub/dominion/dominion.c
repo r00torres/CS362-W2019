@@ -652,7 +652,8 @@ int adventurerEffect(int currentPlayer, struct gameState *state, int drawntreasu
 	printf("cardDrawn=%d\n", cardDrawn);
 	*/
 
-	while(drawntreasure<2){
+
+	while(drawntreasure<3){ //bugged line
         	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
           		shuffle(currentPlayer, state);
         	}
@@ -683,7 +684,8 @@ int cutpurseEffect(int currentPlayer, struct gameState *state, int handPos, int 
 	
 	/*printf("cutpurse\n");*/
 
-	updateCoins(currentPlayer, state, 2);
+	updateCoins(currentPlayer, state, 4); //bugged line
+
       	for (i = 0; i < state->numPlayers; i++){
 		if (i != currentPlayer){
 			for (j = 0; j < state->handCount[i]; j++){
@@ -716,7 +718,8 @@ int salvagerEffect(int currentPlayer, struct gameState *state, int handPos, int 
 	*/
 
 	//+1 buy
-	state->numBuys++;
+	//state->numBuys++; //bugged line
+	
 	if (choice1){
 
         	//gain coins equal to trashed card
@@ -732,8 +735,10 @@ int salvagerEffect(int currentPlayer, struct gameState *state, int handPos, int 
 }
 
 int sea_hagEffect(int currentPlayer, struct gameState *state, int i){
-	printf("sea_hag\n");
-                                                                                                          for (i = 0; i < state->numPlayers; i++){
+	//printf("sea_hag\n");
+                
+	for (i = 0; i < state->numPlayers; i++){
+
         	if (i != currentPlayer){
 			state->discard[i][state->discardCount[i]] = state->deck[i][state->deckCount[i]--];               
 			state->deckCount[i]--;
@@ -758,17 +763,17 @@ int smithyEffect(int currentPlayer, struct gameState *state, int handPos, int i)
         }
 
       	//discard card from hand
-	discardCard(handPos, currentPlayer, state, 0);
+	//discardCard(handPos, currentPlayer, state, 0); //bugged line
 	
 	return 0;
 }
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
-  int i;
-  int j;
-  int k;
-  int x;
+  int i=0;
+  int j=0;
+  int k=0;
+  int x=0;
   int index;
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
@@ -776,7 +781,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   int tributeRevealedCards[2] = {-1, -1};
   int temphand[MAX_HAND];// moved above the if statement
   int drawntreasure=0;
-  int cardDrawn;
+  int cardDrawn=0;
   int z = 0;// this is the counter for the temp hand
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
@@ -794,7 +799,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	printf("cardDrawnT=%d\n", cardDrawn);      
 	*/
 
-	return adventurerEffect(currentPlayer, state, drawntreasure, cardDrawn, temphand, 0);
+	return adventurerEffect(currentPlayer, state, drawntreasure, cardDrawn, temphand, z);
 			
     case council_room:
       //+4 Cards
