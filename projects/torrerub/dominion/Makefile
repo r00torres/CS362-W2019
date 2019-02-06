@@ -29,6 +29,19 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+#Unit and card tests - Assignemnt 3
+unittest1:
+	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c unittest1.c rngs.c -o unittest1 -lm -g
+
+unittest2:
+
+unittest3:
+
+unittest4:
+
+unittestresults: unittest1
+	./unittest1 &> unittestresult.out
+
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
