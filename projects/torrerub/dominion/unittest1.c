@@ -8,8 +8,6 @@ int main(int argc, char** argv){
 
 	struct gameState game;
 	int i;
-	//SelectStream(2);
-	//PutSeed(3);
 
 	//testing isGameOver() which accepts game state
 	printf("____TESTING isGameOver():\n");
