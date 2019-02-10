@@ -30,23 +30,49 @@ runtests: testDrawCard
 	cat dominion.c.gcov >> unittestresult.out
 
 #Unit and card tests - Assignemnt 3
-unittest1:
-	gcc -fprofile-arcs -ftest-coverage -Wall -std=c99 dominion.c unittest1.c rngs.c -o unittest1 -lm -g
+unittest1: dominion.o unittest1.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o unittest1.c rngs.c -o unittest1 -g $(CFLAGS)
 
-unittest2:
+unittest2: dominion.o unittest2.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o unittest2.c rngs.c -o unittest2 -g $(CFLAGS)
 
-unittest3:
+unittest3: dominion.o unittest3.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o unittest3.c rngs.c -o unittest3 -g $(CFLAGS)
 
-unittest4:
+unittest4: dominion.o unittest4.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o unittest4.c rngs.c -o unittest4 -g $(CFLAGS)
 
-unittestresults: unittest1
-	./unittest1 &> unittestresult.out
+cardtest1: dominion.o cardtest1.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o cardtest1.c rngs.c assertTests.c -o cardtest1 -g $(CFLAGS)
 
+cardtest2: dominion.o cardtest2.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o cardtest2.c rngs.c assertTests.c -o cardtest2 -g $(CFLAGS)
+
+cardtest3: dominion.o cardtest3.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o cardtest3.c rngs.c assertTests.c -o cardtest3 -g $(CFLAGS)
+
+cardtest4: dominion.o cardtest4.c
+	gcc -fprofile-arcs -ftest-coverage dominion.o cardtest4.c rngs.c assertTests.c -o cardtest4 -g $(CFLAGS)
+
+unittestresults: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+	./unittest1 &> unittestresults.out
+	./unittest2 >> unittestresults.out
+	./unittest3 >> unittestresults.out
+	./unittest4 >> unittestresults.out
+	./cardtest1 >> unittestresults.out
+	./cardtest2 >> unittestresults.out
+	./cardtest3 >> unittestresults.out
+	./cardtest4 >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
+	cat dominion.c.gcov >> unittestresults.out
+
+assertTests: assertTests.h assertTests.c
+	gcc -o assertT assertTests.c -g $(CFLAGS)
 
 player: player.c interface.o
-	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
+	gcc -o player player.c -g dominion.o rngs.o interface.o $(CFLAGS)
 
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe 
