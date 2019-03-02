@@ -68,7 +68,7 @@ int main(int argc, char** argv){
 		int discardedCards = 0; //cards that will be discarded if not treas
 		int playedCards = 1;
 		int shuffledCards = 0;
-		int treasFromShuffle = 0;
+		//int treasFromShuffle = 0;
 		int q = 0, s = 0;
 		
 		//set turn to testPlayer
