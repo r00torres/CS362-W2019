@@ -25,7 +25,7 @@ int main(int argc, char** argv){
 	int testLimit = 100;	//increase to increase number of tests run
 
 	//cardeffect params
-	int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0; //not used for this card  
+	int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0; //not used for this card
 
 	//game structs
 	struct gameState game, compGame;
@@ -113,5 +113,6 @@ int main(int argc, char** argv){
 	printf("____END SMITHY CARD TEST____\n\n");
 	
 	return 0;
+	
 }
 
