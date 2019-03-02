@@ -50,7 +50,6 @@ int main(int argc, char** argv){
 		//random seed for init
 		seed = (rand() % 5000);
 
-		//init game
 		initializeGame(numPlayers, k, seed, &game);
 
 		//random test player from 0-numPlayers
