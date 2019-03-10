@@ -7,12 +7,12 @@ int isEqual(int testValue, int compValue, char * message){
 	printf("%s:", message);
 
 	if(testValue == compValue){
-		printf("PASS\n");
+		printf("PASS");
 		return 1;
 	}
 
 	else{
-		printf("FAIL\n");
+		printf("FAIL");
 		return 0;
 	}
 }
