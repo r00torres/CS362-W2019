@@ -57,8 +57,8 @@ int main(int argc, char** argv){
 	printf("\tEXPECTED DISCARD COUNT %d. ACTUAL DISCARD COUNT %d.\n", (compGame.discardCount[testPlayer] + discardedCards), game.discardCount[testPlayer]);
 
 	//check card was played
-	isEqual(game.handCount[testPlayer], (compGame.handCount[testPlayer] + newCards), "HANDCOUNT TEST");
-	printf("\tEXPECTED HANDCOUNT %d. ACTUAL HANDCOUNT %d.\n", (compGame.handCount[testPlayer] + newCards), game.handCount[testPlayer]);
+	isEqual(game.handCount[testPlayer], (compGame.handCount[testPlayer] + newCards - discardedCards), "HANDCOUNT TEST");
+	printf("\tEXPECTED HANDCOUNT %d. ACTUAL HANDCOUNT %d.\n", (compGame.handCount[testPlayer] + newCards - discardedCards), game.handCount[testPlayer]);
 
 	//should test effects when a shuffle needed
 	
