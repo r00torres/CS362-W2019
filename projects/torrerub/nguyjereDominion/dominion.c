@@ -667,7 +667,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-	    return adventurer_effect(currentPlayer, state, temphand, &cardDrawn, &drawntreasure, &z);
+	    return adventurer_effect(currentPlayer, state, temphand, &cardDrawn, &drawntreasure, &z, handPos);
 			
     case council_room:
 	    return council_room_effect(currentPlayer, state, handPos);
@@ -1168,17 +1168,18 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   return -1;
 }
 
-int adventurer_effect(int currentPlayer, struct gameState *state, int* temphand, int *cardDrawn, int *drawntreasure, int *z)
+int adventurer_effect(int currentPlayer, struct gameState *state, int* temphand, int *cardDrawn, int *drawntreasure, int *z, int handPos)
 {
+	int test = *drawntreasure;
 	// BUG: changed  2 to 5
-	while (*drawntreasure < 5) {
+	while (test < 2) {
 		if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
 			shuffle(currentPlayer, state);
 		}
 		drawCard(currentPlayer, state);
 		*cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];//top card of hand is most recently drawn card.
 		if (*cardDrawn == copper || *cardDrawn == silver || *cardDrawn == gold)
-			drawntreasure++;
+			test++;
 		else {
 			temphand[*z] = *cardDrawn;
 			state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
@@ -1189,6 +1190,10 @@ int adventurer_effect(int currentPlayer, struct gameState *state, int* temphand,
 		state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[*z - 1]; // discard all cards in play that have been drawn
 		*z = *z - 1;
 	}
+	
+	//BUG?: missing discard
+	discardCard(handPos, currentPlayer, state, 0);
+
 	return 0;
 }
 
@@ -1197,7 +1202,7 @@ int smithy_effect(int currentPlayer, struct gameState *state, int handPos)
 	//+3 Cards
 	// BUG: changed 3 to 10
 	int i = 0;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 3; i++)
 	{
 		drawCard(currentPlayer, state);
 	}
@@ -1254,7 +1259,7 @@ int village_effect(int currentPlayer, struct gameState *state, int handPos)
 
 	//discard played card from hand
 	// BUG: Does not discard the card
-	//discardCard(handPos, currentPlayer, state, 0);
+	discardCard(handPos, currentPlayer, state, 0);
 	return 0;
 }
 
